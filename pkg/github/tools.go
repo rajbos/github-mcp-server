@@ -36,6 +36,7 @@ func InitToolsets(passedToolsets []string, readOnly bool, getClient GetClientFn,
 			toolsets.NewServerTool(ForkRepository(getClient, t)),
 			toolsets.NewServerTool(CreateBranch(getClient, t)),
 			toolsets.NewServerTool(PushFiles(getClient, t)),
+			toolsets.NewServerTool(DeleteFile(getClient, t)),
 		)
 	issues := toolsets.NewToolset("issues", "GitHub Issues related tools").
 		AddReadTools(
@@ -123,4 +124,8 @@ func InitDynamicToolset(s *server.MCPServer, tsg *toolsets.ToolsetGroup, t trans
 
 	dynamicToolSelection.Enabled = true
 	return dynamicToolSelection
+}
+
+func toBoolPtr(b bool) *bool {
+	return &b
 }
